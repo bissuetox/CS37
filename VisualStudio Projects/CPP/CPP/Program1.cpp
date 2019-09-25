@@ -24,6 +24,7 @@ int main()
 void calculate(***)
 {
 	int NEWSHITNIGGA;
+	int IHEARYOU = 5;
 }
 
 

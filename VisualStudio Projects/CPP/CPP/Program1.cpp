@@ -23,6 +23,7 @@ int main()
 
 void calculate(***)
 {
+	int NEWSHITNIGGA;
 }
 
 

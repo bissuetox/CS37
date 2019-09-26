@@ -27,7 +27,7 @@ public:
 };
 */
 
-// class and functions by reference
+// class and functions by reference------------
 
 /*
 class Rectangle {

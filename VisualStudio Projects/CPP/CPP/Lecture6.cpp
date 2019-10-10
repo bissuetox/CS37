@@ -13,7 +13,7 @@ public:
 		nx = x;
 		ny = y;
 	}
-	void setX(const int& nx) // using reference is beneficial for speed - if a large user defined type is passed, no no memory needs to be allocated for that var
+	void setX(const int& nx) // using reference is beneficial for speed - if a large user defined type is passed, no new memory needs to be allocated for that var
 	{
 		nx = 5; // if we accidentally try to set nx to something, it won't go through
 		x = nx; 

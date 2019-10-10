@@ -15,7 +15,7 @@ public:
 	float getY();
 	float getZ();
 	float distOrigin();
-	Point operator+(Point const funcPoint);
+	Point operator+(const Point& funcPoint);
 	int operator!();
 
 private:
@@ -79,11 +79,11 @@ void updatePoint(Point *point) {
 }
 
 // + operator overload function that initializes a temp pointer, adds the called and passed Point into the values of the temp Point, and returns it
-Point Point::operator+(Point funcPoint) {
+Point Point::operator+(const Point& funcPoint) {
 	Point tempPoint;
-	tempPoint.setX(x + funcPoint.getX());
-	tempPoint.setY(y + funcPoint.getY());
-	tempPoint.setZ(z + funcPoint.getZ());
+	tempPoint.x = x + funcPoint.x;
+	tempPoint.y = y + funcPoint.y;
+	tempPoint.z = z + funcPoint.z;
 	return tempPoint;
 }
 

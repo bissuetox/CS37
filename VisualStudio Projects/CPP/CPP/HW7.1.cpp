@@ -117,6 +117,7 @@ int main() {
 	cout << "Fraction 1: " << f1 << endl;
 	cout << "Fraction 2: " << f2 << endl;
 
+	// printing fraction addition and subtraction operations according to prompt
 	cout << f1 << " + " << f2 << " = " << f1 + f2 << endl;
 	cout << f1 << " - " << f2 << " = " << f1 - f2 << endl;
 	cout << f1 << " + " << "5" << " = " << f1 + 5 << endl;

@@ -161,7 +161,7 @@ void printBoxes(Box funcBox[]) {
 
 void printResults(Box funcBox[]) {
 	cout << endl << "Minimum container specifications: " << endl;
-	cout << fixed << "Length: " << setprecision(1) << Box::minLength << " Width: " << Box::minWidth << " Height: " << Box::minHeight << " Volume: " << Box::minVolume << endl;
+	cout << funcBox[0]
 }
 
 float Box::totalVolume = 0;
@@ -186,7 +186,7 @@ int main()
 	float efficiency = Box::totalVolume / Box::minVolume;
 }
 
-// insertion operator overloaded function definition
+// extraction operator overloaded function definition
 // extracts input in the format x,y x,y x,y x,y height
 istream& operator>>(istream& input, Box &funcBox) {
 	string description;
@@ -194,23 +194,19 @@ istream& operator>>(istream& input, Box &funcBox) {
 	input.ignore();
 	getline(input, description);
 	input >> x1; // input into first x
-	//input.ignore(); // ignore comma
 	input >> y1; // input into first y
 	input >> x2; // etc
-	//input.ignore();
 	input >> y2;
 	input >> x3;
-	//input.ignore();
 	input >> y3;
 	input >> x4;
-	//input.ignore();
 	input >> y4;
 	input >> height;
 	funcBox.setData(description, x1, y1, x2, y2, x3, y3, x4, y4, height);
 	return input;
 }
+// insertion operator overloaded function definition - prints Box contents in prompt format
 ostream& operator<<(ostream& output, Box funcBox) {
-	output << "Minimum container specifications: " << endl;
 	output << "Length: " << funcBox.getLength() << "Width: " << funcBox.getWidth() << "Height: " << funcBox.getHeight() << "Volume: " << funcBox.getVolume() << endl;
 	return output;
 }

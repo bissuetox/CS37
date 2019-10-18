@@ -113,6 +113,7 @@ ostream& operator<<(ostream& output, const Fraction frac);
 // stream extraction operator overloaded function that takes input in the format x/y
 istream& operator>>(istream& input, Fraction &frac);
 
+// main function that prompts user for a fraction in the format x/y and prints its addition 
 int main() {
 	const Fraction half(1, 2), quarter(1, 4);
 	Fraction userFraction;
@@ -120,7 +121,7 @@ int main() {
 	cin >> userFraction;
 
 	cout << half << " + " << quarter << " = " << half + quarter << endl;
-	cout << half << " + " << userFraction << " = " << half + userFraction << endl;
+	cout << half << " - " << userFraction << " = " << half + userFraction << endl;
 	cout << half << " + " << 5 << " = " << half + 5 << endl;
 
 	system("pause");
@@ -133,6 +134,7 @@ ostream& operator<<(ostream& output, const Fraction frac) {
 	return output;
 }
 
+// stream extraction operator overloaded function definition
 istream& operator>>(istream& input, Fraction &frac) {
 	int tempNum, tempDenom;
 	input >> tempNum;

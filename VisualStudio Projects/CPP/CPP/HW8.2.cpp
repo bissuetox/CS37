@@ -129,23 +129,15 @@ public:
 // event individual parameter constructor definition
 Event::Event(string idescription, int iday, int imonth, int iyear, int ihour, int iminute, int isecond) {
 	description = idescription;
-	classDate.setDay(iday);
-	classDate.setMonth(imonth);
-	classDate.setYear(iyear);
-	classTime.setHour(ihour);
-	classTime.setMinute(iminute);
-	classTime.setSecond(isecond);
+	classDate = Date(iday, imonth, iyear);
+	classTime = Time(ihour, iminute, isecond);
 }
 
 // event constructor definition with date and time classes in parameters
 Event::Event(string idescription, Date funcDate, Time funcTime) {
 	description = idescription;
-	classDate.setDay(funcDate.getDay());
-	classDate.setMonth(funcDate.getMonth());
-	classDate.setYear(funcDate.getYear());
-	classTime.setHour(funcTime.getHour());
-	classTime.setMinute(funcTime.getMinute());
-	classTime.setSecond(funcTime.getSecond());
+	classDate = funcDate;
+	classTime = funcTime;
 }
 
 // operator << overloaded function definition that prints date in format mm/dd/yy
@@ -163,7 +155,6 @@ ostream& operator<<(ostream& output, Time funcTime) {
 }
 
 // operator << overloaded function definition that prints the even data
-// 
 ostream& operator<<(ostream& output, Event funcEvent) {
 	output << "Event description: " << funcEvent.description << endl;
 	output << "Event Date: " << funcEvent.classDate << endl;

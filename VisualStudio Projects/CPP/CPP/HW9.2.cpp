@@ -5,6 +5,11 @@
 
 using namespace std;
 
+class Person {
+private:
+
+};
+
 // function prototypes
 int determineLines(ifstream& fileIn);
 void readLines(ifstream& fileIn, string linesArray[], const int& lineCount);

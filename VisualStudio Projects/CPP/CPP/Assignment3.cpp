@@ -110,6 +110,7 @@ public:
 	string getDescription()const;
 	float getPrice()const;
 	int getQtySold()const;
+	float getRevenue()const;
 
 protected:
 	string description;
@@ -141,6 +142,9 @@ float Parts::getPrice()const {
 }
 int Parts::getQtySold()const {
 	return qtySold;
+}
+float Parts::getRevenue()const {
+	return revenue;
 }
 
 // Brakes class definition - inherits parts class AND car class
@@ -297,6 +301,8 @@ int fileLineCount(ifstream& fileIn);
 void objectCount(ifstream& fileIn, int& brakeCount, int& lightCount, int& oilCount, int& tireCount);
 void objectStore(ifstream& fileIn, Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray);
 void sortArrays(Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray, const int& brakeCount, const int& lightCount, const int& oilCount, const int& tireCount);
+void outputIndividualBest(ofstream& fileOut, Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray);
+void outputTotalBest(ofstream& fileOut, Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray, const int& brakeCount, const int& lightCount, const int& oilCount, const int& tireCount);
 
 int main()
 {
@@ -305,8 +311,14 @@ int main()
 	int brakeCount = 0, lightCount = 0, oilCount = 0, tireCount = 0;
 	
 	// Call a global function to find out how many objects of each type to create
-	objectCount(fileIn, brakeCount, lightCount, oilCount, tireCount);
-
+	if (fileIn.is_open()) {
+		cout << "File found." << endl;
+		objectCount(fileIn, brakeCount, lightCount, oilCount, tireCount);
+	}
+	else {
+		cerr << "File not found.";
+		exit(1);
+	}
 	// Create arrays to contain the necessary objects
 	Brakes* brakeArray = new Brakes[brakeCount];
 	Lights* lightArray = new Lights[lightCount];
@@ -315,11 +327,22 @@ int main()
 
 	// Global function to read information from the file into the arrays of objects
 	objectStore(fileIn, brakeArray, lightArray, oilArray, tireArray);
-	// Call functions to find the best selling item for each category, output best to a file
+	fileIn.close(); // Close file input stream
+
+	// Function to sort arrays from most to least revenue
 	sortArrays(brakeArray, lightArray, oilArray, tireArray, brakeCount, lightCount, oilCount, tireCount);
 
-	// Close the file explicitly and delete dynamic arrays
-	fileIn.close();
+	// Output Functions
+	ofstream fileIndividualOut("Best_Individual_Parts.txt");
+	ofstream fileTotalOut("Best_Total_Parts.txt");
+	outputIndividualBest(fileIndividualOut, brakeArray, lightArray, oilArray, tireArray);
+	outputTotalBest(fileTotalOut, brakeArray, lightArray, oilArray, tireArray, brakeCount, lightCount, oilCount, tireCount);
+	cout << "Files written." << endl;
+
+	fileIndividualOut.close(); // Close output files
+	fileTotalOut.close();
+
+	// Delete dynamic arrays
 	delete[] brakeArray;
 	delete[] lightArray;
 	delete[] oilArray;
@@ -420,8 +443,140 @@ void objectStore(ifstream& fileIn, Brakes* brakeArray, Lights* lightArray, Oil* 
 
 // Sorts arrays from most revenue to least revenue
 void sortArrays(Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray, const int& brakeCount, const int& lightCount, const int& oilCount, const int& tireCount) {
-	int a[] = { 1, 2, 3, 4 };
-	cout << sizeof(a) << " - " << sizeof(a[0]);
+	// Brake Array Sort
+	int i, j, largestIndex;
+	float largest;
+	for (i = 0; i < brakeCount; i++) { // Loop through all revenues in Array
+		largest = brakeArray[i].getRevenue(); // Set first revenue as largest VALUE
+		largestIndex = i; // Set var to the larges value's INDEX
+		for (j = i; j < brakeCount; j++) { // Loop through the whole array again - this includes the same iteration
+			if (brakeArray[j].getRevenue() > largest) { // if the iterated revenue is larger than the current largest, set the value and index to this iteration
+				largest = brakeArray[j].getRevenue();
+				largestIndex = j;
+			}
+		}
+		Brakes temp = brakeArray[i]; // Swap the two objects
+		brakeArray[i] = brakeArray[largestIndex];
+		brakeArray[largestIndex] = temp;
+	}
+
+	// Light Array Sort
+	for (i = 0; i < lightCount; i++) { // Loop through all revenues in Array
+		largest = lightArray[i].getRevenue(); // Set first revenue as largest VALUE
+		largestIndex = i; // Set var to the largest value's INDEX
+		for (j = i; j < lightCount; j++) { // Loop through the whole array again - this includes the same iteration
+			if (lightArray[j].getRevenue() > largest) { // if the iterated revenue is larger than the current largest, set the value and index to this iteration
+				largest = lightArray[j].getRevenue();
+				largestIndex = j;
+			}
+		}
+		Lights temp = lightArray[i]; // Swap the two objects
+		lightArray[i] = lightArray[largestIndex];
+		lightArray[largestIndex] = temp;
+	}
+
+	// Oil Array Sort
+	for (i = 0; i < oilCount; i++) { // Loop through all revenues in Array
+		largest = oilArray[i].getRevenue(); // Set first revenue as largest VALUE
+		largestIndex = i; // Set var to the largest value's INDEX
+		for (j = i; j < oilCount; j++) { // Loop through the whole array again - this includes the same iteration
+			if (oilArray[j].getRevenue() > largest) { // if the iterated revenue is larger than the current largest, set the value and index to this iteration
+				largest = oilArray[j].getRevenue();
+				largestIndex = j;
+			}
+		}
+		Oil temp = oilArray[i]; // Swap the two objects
+		oilArray[i] = oilArray[largestIndex];
+		oilArray[largestIndex] = temp;
+	}
+
+	// Tires Array Sort
+	for (i = 0; i < tireCount; i++) { // Loop through all revenues in Array
+		largest = tireArray[i].getRevenue(); // Set first revenue as largest VALUE
+		largestIndex = i; // Set var to the largest value's INDEX
+		for (j = i; j < tireCount; j++) { // Loop through the whole array again - this includes the same iteration
+			if (tireArray[j].getRevenue() > largest) { // if the iterated revenue is larger than the current largest, set the value and index to this iteration
+				largest = tireArray[j].getRevenue();
+				largestIndex = j;
+			}
+		}
+		Tires temp = tireArray[i]; // Swap the two objects
+		tireArray[i] = tireArray[largestIndex];
+		tireArray[largestIndex] = temp;
+	}
+}
+
+void outputIndividualBest(ofstream& fileOut, Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray) {
+	// Best Seller of Brakes
+	fileOut << "** " << brakeArray[0].getCategory() << " **" << endl;
+	fileOut << "\tDescription: " << brakeArray[0].getDescription() << endl;
+	fileOut << "\tPrice: " << brakeArray[0].getPrice() << endl;
+	fileOut << "\tManufacturer: " << brakeArray[0].getManufacturer() << endl;
+	fileOut << "\tQty Sold: " << brakeArray[0].getQtySold() << endl;
+	fileOut << "\tCar:" << endl;
+	fileOut << "\t\tBrand: " << brakeArray[0].getBrand() << endl;
+	fileOut << "\t\tModel: " << brakeArray[0].getModel() << endl;
+	fileOut << "\t\tYear: " << brakeArray[0].getYear() << endl;
+	fileOut << "\tMaterial: " << brakeArray[0].getMaterial() << endl << endl;
+
+
+	// Best Seller of Lights
+	fileOut << "** " << lightArray[0].getCategory() << " **" << endl;
+	fileOut << "\tDescription: " << lightArray[0].getDescription() << endl;
+	fileOut << "\tPrice: " << lightArray[0].getPrice() << endl;
+	fileOut << "\tManufacturer: " << lightArray[0].getManufacturer() << endl;
+	fileOut << "\tQty Sold: " << lightArray[0].getQtySold() << endl;
+	fileOut << "\tCar:" << endl;
+	fileOut << "\t\tBrand: " << lightArray[0].getBrand() << endl;
+	fileOut << "\t\tModel: " << lightArray[0].getModel() << endl;
+	fileOut << "\t\tYear: " << lightArray[0].getYear() << endl;
+	fileOut << "\tWatts: " << lightArray[0].getWatts() << endl << endl;
+
+	// Best Seller of Oil
+	fileOut << "** " << oilArray[0].getCategory() << " **" << endl;
+	fileOut << "\tDescription: " << oilArray[0].getDescription() << endl;
+	fileOut << "\tPrice: " << oilArray[0].getPrice() << endl;
+	fileOut << "\tManufacturer: " << oilArray[0].getManufacturer() << endl;
+	fileOut << "\tQty Sold: " << oilArray[0].getQtySold() << endl;
+	fileOut << "\tWeight: " << oilArray[0].getWeight() << endl;
+	fileOut << "\tType: " << oilArray[0].getType() << endl;
+	fileOut << "\tQuarts: " << oilArray[0].getQuarts() << endl << endl;
+
+	// Best Seller of Tires
+	fileOut << "** " << tireArray[0].getCategory() << " **" << endl;
+	fileOut << "\tDescription: " << tireArray[0].getDescription() << endl;
+	fileOut << "\tPrice: " << tireArray[0].getPrice() << endl;
+	fileOut << "\tManufacturer: " << tireArray[0].getManufacturer() << endl;
+	fileOut << "\tQty Sold: " << tireArray[0].getQtySold() << endl;
+	fileOut << "\tSize: " << tireArray[0].getSize() << endl;
+	fileOut << "\tWarranty: " << tireArray[0].getWarranty() << endl << endl;
+}
+
+void outputTotalBest(ofstream& fileOut, Brakes* brakeArray, Lights* lightArray, Oil* oilArray, Tires* tireArray, const int& brakeCount, const int& lightCount, const int& oilCount, const int& tireCount) {
+	// Brake Revenue Revenues
+	int i;
+	fileOut << brakeArray[0].getCategory() << endl;
+	for (i = 0; i < brakeCount; i++) {
+		fileOut << "\t" << setw(35) << left << brakeArray[i].getDescription() << "  $" << setw(10) << left << setprecision(2) << fixed << brakeArray[i].getRevenue() << endl;
+	}
+
+	// Light Array Revenues
+	fileOut << lightArray[0].getCategory() << endl;
+	for (i = 0; i < lightCount; i++) {
+		fileOut << "\t" << setw(35) << left << lightArray[i].getDescription() << "  $" << setw(10) << left << setprecision(2) << fixed << lightArray[i].getRevenue() << endl;
+	}
+
+	// Oil Array Revenues
+	fileOut << oilArray[0].getCategory() << endl;
+	for (i = 0; i < oilCount; i++) {
+		fileOut << "\t" << setw(35) << left << oilArray[i].getDescription() << "  $" << setw(10) << left << setprecision(2) << fixed << oilArray[i].getRevenue() << endl;
+	}
+
+	// Tire Array Revenues
+	fileOut << tireArray[0].getCategory() << endl;
+	for (i = 0; i < tireCount; i++) {
+		fileOut << "\t" << setw(35) << left << tireArray[i].getDescription() << "  $" << setw(10) << left << setprecision(2) << fixed << tireArray[i].getRevenue() << endl;
+	}
 }
 
 // Notes:

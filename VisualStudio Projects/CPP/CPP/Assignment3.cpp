@@ -97,9 +97,11 @@ string Manufacturer::getManufacturer()const {
 }
 
 // Parts class definition - contains all common attributes of all parts
-class Parts : public Manufacturer
+class Parts
 {
 public:
+	// Manufacturer object delclaration - has a manufacturer
+	Manufacturer manufacturer;
 	// Constructor prototypes
 	Parts();
 	Parts(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold);
@@ -111,6 +113,7 @@ public:
 	float getPrice()const;
 	int getQtySold()const;
 	float getRevenue()const;
+	string getManufacturer()const;
 
 protected:
 	string description;
@@ -120,9 +123,9 @@ protected:
 };
 
 // Parts Constructor defintions
-Parts::Parts() : description(""), price(0.0f), qtySold(0), Manufacturer(), revenue(0.0f) {}
+Parts::Parts() : description(""), price(0.0f), qtySold(0), manufacturer(), revenue(0.0f) {}
 Parts::Parts(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold) :
-	description(fDescription), price(fPrice), Manufacturer(fManufacturer), qtySold(fQtySold), revenue(fPrice * fQtySold) {}
+	description(fDescription), price(fPrice), manufacturer(fManufacturer), qtySold(fQtySold), revenue(fPrice * fQtySold) {}
 
 // Parts Setter and Getter definitions
 void Parts::setDescription(const string& fDescription) {
@@ -146,11 +149,16 @@ int Parts::getQtySold()const {
 float Parts::getRevenue()const {
 	return revenue;
 }
+string Parts::getManufacturer()const {
+	return manufacturer.getManufacturer();
+}
 
-// Brakes class definition - inherits parts class AND car class
-class Brakes : public Parts, public Car
+// Brakes class definition - is a Part, has a car
+class Brakes : public Parts
 {
 public:
+	// Has a car - car object declaration
+	Car car;
 	// Constructor Prototypes
 	Brakes();
 	Brakes(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold, const string& fBrand, const string& fModel, const int& fYear, const string fMaterial);
@@ -158,14 +166,17 @@ public:
 	void setMaterial(const string& fMaterial);
 	string getMaterial()const;
 	string getCategory()const;
+	string getBrand()const;
+	string getModel()const;
+	int getYear()const;
 private:
 	string material, category;
 };
 
 // Constructor definitions
-Brakes::Brakes() : Parts(), Car(), material(""), category("Brakes") {}
+Brakes::Brakes() : Parts(), car(), material(""), category("Brakes") {}
 Brakes::Brakes(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold, const string& fBrand, const string& fModel, const int& fYear, const string fMaterial) :
-	Parts(fDescription, fPrice, fManufacturer, fQtySold), Car(fBrand, fModel, fYear), material(fMaterial), category("Brakes") {}
+	Parts(fDescription, fPrice, fManufacturer, fQtySold), car(fBrand, fModel, fYear), material(fMaterial), category("Brakes") {}
 // Getter and setter prototypes
 void Brakes::setMaterial(const string& fMaterial) {
 	material = fMaterial;
@@ -176,12 +187,23 @@ string Brakes::getMaterial()const {
 string Brakes::getCategory()const {
 	return category;
 }
+string Brakes::getBrand()const {
+	return car.getBrand();
+}
+string Brakes::getModel()const {
+	return car.getModel();
+}
+int Brakes::getYear()const {
+	return car.getYear();
+}
 
 
-// Lights class definition - inherits Parts class
-class Lights : public Parts, public Car
+// Lights class definition - is a Part, has a car
+class Lights : public Parts
 {
 public:
+	// Has a car - car class declaration
+	Car car;
 	// Constructor Prototypes
 	Lights();
 	Lights(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold, const string& fBrand, const string& fModel, const int& fYear, const int& fWatts);
@@ -189,15 +211,18 @@ public:
 	void setWatts(const int& fWatts);
 	int getWatts()const;
 	string getCategory()const;
+	string getBrand()const;
+	string getModel()const;
+	int getYear()const;
 private:
 	int watts;
 	string category;
 };
 
 // Constructor definitions
-Lights::Lights() : Parts(), Car(), watts(0), category("Lights") {}
+Lights::Lights() : Parts(), car(), watts(0), category("Lights") {}
 Lights::Lights(const string& fDescription, const float& fPrice, const string& fManufacturer, const int& fQtySold, const string& fBrand, const string& fModel, const int& fYear, const int& fWatts) :
-	Parts(fDescription, fPrice, fManufacturer, fQtySold), Car(fBrand, fModel, fYear), watts(fWatts), category("Lights") {}
+	Parts(fDescription, fPrice, fManufacturer, fQtySold), car(fBrand, fModel, fYear), watts(fWatts), category("Lights") {}
 // Getter and Setter definitions
 void Lights::setWatts(const int& fWatts) {
 	watts = fWatts;
@@ -208,8 +233,17 @@ int Lights::getWatts()const {
 string Lights:: getCategory()const {
 	return category;
 }
+string Lights::getBrand()const {
+	return car.getBrand();
+}
+string Lights::getModel()const {
+	return car.getModel();
+}
+int Lights::getYear()const {
+	return car.getYear();
+}
 
-// Oil class definition - inherits Parts class
+// Oil class definition - is a Part
 class Oil : public Parts{
 public:
 	// Constructor Prototypes
@@ -257,7 +291,8 @@ string Oil::getCategory()const {
 	return category;
 }
 
-class Tires : public Parts
+// Tires class definition - is a Part
+class Tires : public Parts 
 {
 public:
 	// Constructor Prototypes

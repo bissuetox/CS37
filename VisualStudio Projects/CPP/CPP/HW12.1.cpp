@@ -102,7 +102,9 @@ double Train::getCO2()const {
 // Global polymorphism function definition - returns carbon footprint of any Vehicle inherited class object
 double getCarbonFootprint(Vehicle* vehicle);
 
+// Main Function
 int main() {
+	// Instantiation
 	Car car1(500, 2345);
 	Truck truck1(750, 300);
 	Train train1(17000, 10);
@@ -110,12 +112,14 @@ int main() {
 	Vehicle* truckPtr = &truck1;
 	Vehicle* trainPtr = &train1;
 
+	// Printing info
 	cout << "Car Carbon Footprint: " << getCarbonFootprint(carPtr) << endl;
 	cout << "Truck Carbon Footprint: " << getCarbonFootprint(truckPtr) << endl;
 	cout << "Train Carbon Footprint: " << getCarbonFootprint(trainPtr) << endl;
 	
 }
 
+// Global polymorphism function definition
 double getCarbonFootprint(Vehicle* vehicle) {
 	return vehicle->getCO2();
 }

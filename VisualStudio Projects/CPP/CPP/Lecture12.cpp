@@ -2,7 +2,7 @@
 using namespace std;
 
 // Base - Derived simple example
-/*
+
 class Base {
 public:
 	Base(const int& iBaseInt);
@@ -49,7 +49,7 @@ int main() {
 	//  to pass into it. 
 } 
 
-*/
+
 
 class Mammal {
 public:

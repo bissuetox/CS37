@@ -6,20 +6,12 @@ using namespace std;
 class Insurance {
 public:
 	Insurance(const int& iValue);
-	virtual float calcPremium()const;
-	virtual float calcComission()const; // Polymorphism functions
+	virtual float calcPremium()const = 0; // = 0 means this is an abstract class
+	virtual float calcComission()const = 0; // Polymorphism functions
 protected:
 	int value;
 };
 
-// Insurance class member function definitions
-Insurance::Insurance(const int& iValue) : value(iValue) {}
-float Insurance::calcPremium()const {
-	return value * .01; // Base default value - I chose 1%?
-}
-float Insurance::calcComission()const {
-	return value * .01; // Base default value - I chose 1%?
-}
 
 // Home Insurance class definition
 class HomeInsurance : public Insurance {

@@ -46,7 +46,7 @@ protected:
 byQuantity::byQuantity(const double& iQuantity) : quantity(iQuantity) {}
 
 double byQuantity::calcCost()const {
-	
+
 	if (quantity >= 1 && quantity <= 10) {
 		return 0.11 * quantity;
 	}
@@ -58,7 +58,7 @@ double byQuantity::calcCost()const {
 	}
 	else
 		cout << "Invalid Quantity" << endl;
-		
+
 }
 
 double globalCost(Materials* iMaterial);

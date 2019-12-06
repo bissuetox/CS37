@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void displayInfo(Animal& aref);
+void displayInfo(const Animal& aref);
 
 int main()
 {
@@ -18,6 +18,7 @@ int main()
 	Fish oneF("Tilapia", "Crickets", 50);
 	displayInfo(oneF);
 	
+	terminate();
 	Reptile oneR("Fer de Lance", "Mice");
 	displayInfo(oneR);
 
@@ -28,7 +29,7 @@ int main()
 }
 
 //Display data for a single animal
-void displayInfo(Animal& aref)
+void displayInfo(const Animal& aref)
 {
 	aref.display();
 	cout << "\nFood Amount: " << aref.calcFoodAmt() << endl;

@@ -19,10 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Test_Assignment4.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Animal.h" />
+    <ClCompile Include="Lab14.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

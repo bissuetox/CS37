@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab_LabLoop.cpp">
+    <ClCompile Include="Lab_DynamicArrays.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

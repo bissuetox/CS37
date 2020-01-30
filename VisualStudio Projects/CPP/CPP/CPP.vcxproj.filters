@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab_ArrayBasedStack.cpp">
+    <ClCompile Include="Lecture3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

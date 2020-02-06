@@ -52,8 +52,7 @@ int ArrayBasedStack::isEmpty() {	// Is Empty Function definition
 	}
 	else {
 		return 0;					// Return 0 (false)
-	}
-
+	} 
 }
 
 

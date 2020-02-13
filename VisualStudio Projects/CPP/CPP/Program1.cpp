@@ -55,7 +55,7 @@ float NodeStack::pop() {
 		//Node* temp = TOS;								// Copy the current TOS object into temp
 		float temp = TOS->value;
 		TOS = TOS->next;								// Set the TOS to the next object in stack
-		cout << "Returned " << temp << endl;			// Debug cout	
+		//cout << "Returned " << temp << endl;			// Debug cout	
 		return temp;									// Return the temp node
 	}
 	else {
@@ -107,8 +107,6 @@ void rpExpression(NodeStack& stack, string tokens[]) {
 		current_token = tokens[i];								// Set current token to ith token
 
 		if (isOperator(current_token)){							// If operator is hit
-
-
 			float num1 = stack.pop();
 			float num2 = stack.pop();
 			if (current_token == "+") {							// If + operator, add and push result
@@ -126,14 +124,14 @@ void rpExpression(NodeStack& stack, string tokens[]) {
 				}
 			}
 		}
-
+		else if (tokens[i] == "="){
+			break;
+		}
 		else {
-			stack.push(stof(current_token));
+			// stack.push(stof(current_token));
 			cout << "pushed " << stof(current_token) << endl;
 			operands++;
 		}
-
-
 	} while (current_token != "=" && i != NUM_EXPRESSIONS);
 }
 
@@ -142,7 +140,6 @@ void rpExpression(NodeStack& stack, string tokens[]) {
 	}
 
 	/*
-	
 	while "=" hasnt been hit
 		if an operator & operands = 2
 			pop last two into a and b
@@ -164,15 +161,7 @@ void rpExpression(NodeStack& stack, string tokens[]) {
 			convert to float
 			push to stack
 			operands ++ 
-
-		
-
-
-
 		i++
 
 	pop "=" and print the result
 	*/
-
-	
-

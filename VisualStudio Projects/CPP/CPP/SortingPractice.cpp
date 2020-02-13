@@ -10,6 +10,7 @@ void insertionSort(int arr[], int size);
 void selectionSort(int arr[], int size);
 void quickSort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
+void merge(int arr[], int left, int mid, int right);
 
 
 int main() {
@@ -30,6 +31,7 @@ int main() {
 	quickSort(arr, 0, n - 1);
 	cout << endl << "After" << endl;
 	printArray(arr, n);
+
 
 
 }
@@ -96,8 +98,6 @@ void selectionSort(int arr[], int size) {
 
 
 	}
-
-
 }
 
 void quickSort(int arr[], int low, int high) {
@@ -114,7 +114,7 @@ int partition(int arr[], int low, int high) {
 	int smaller = low - 1;									// Smaller index ptr set to low - 1 (smaller is ++ first in the for loop so it will start at 0)
 
 	for (int current = low; current <= high - 1; current++) {	// Loop through array from low to high
-		if (arr[current] < pivot) {					// If the current elem is smaller than pivot
+		if (arr[current] < pivot) {							// If the current elem is smaller than pivot
 			smaller++;										// Increase smaller ptr
 			swap(arr[smaller], arr[current]);				// Swap the current elem with smaller elem
 		}
@@ -125,6 +125,12 @@ int partition(int arr[], int low, int high) {
 	return (smaller + 1);								// This leaves the pivot in between the smaller and larger values. Array is ready for quick sort
 
 }
+
+void merge(int arr[], int left, int mid, int right) {
+
+}
+
+
 
 void swap(int &num1, int &num2) {
 	int temp = num1;

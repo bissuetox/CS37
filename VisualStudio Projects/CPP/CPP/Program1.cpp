@@ -55,7 +55,7 @@ float NodeStack::pop() {
 		//Node* temp = TOS;								// Copy the current TOS object into temp
 		float temp = TOS->value;
 		TOS = TOS->next;								// Set the TOS to the next object in stack
-		//cout << "Returned " << temp << endl;			// Debug cout	
+		//cout << "popped " << temp << endl;			// Debug cout	
 		return temp;									// Return the temp node
 	}
 	else {
@@ -76,9 +76,13 @@ int main() {
 	cout << "Enter Reversh Polish Expression: " << endl;
 	getline(cin, input);
 
-	tokenize(tokens, input);
-
-	rpExpression(stack, tokens);
+	while (input != "0") {
+		tokenize(tokens, input);
+		rpExpression(stack, tokens);
+		cout << "Enter Reversh Polish Expression: " << endl;
+		getline(cin, input);
+	}
+	
 
 }
 
@@ -107,61 +111,91 @@ void rpExpression(NodeStack& stack, string tokens[]) {
 		current_token = tokens[i];								// Set current token to ith token
 
 		if (isOperator(current_token)){							// If operator is hit
-			float num1 = stack.pop();
+			operators++;
+			if (!(operands >= 2)) {								// If operator is hit when there is not more than 2 operators
+				error = "Too many operators!";
+				break;											// Set error msg and break loop
+			}
+
 			float num2 = stack.pop();
+			float num1 = stack.pop();							// Pop last two floats off of stack and store in local varibales
+			operands = operands - 1;							// Technically remove 2 operands, then add 1 more after below calculations.
 			if (current_token == "+") {							// If + operator, add and push result
 				stack.push(num1 + num2);
+				//cout << num1 << " + " << num2 << " = " << num1 + num2 << endl;		// Debug 
 			}
-			else if (current_token == "-") {
+			else if (current_token == "-"){						// If - operator, subtract and push result
 				stack.push(num1 - num2);
+				//cout << num1 << " - " << num2 << " = " << num1 - num2 << endl;		// Debug 
 			}
-			else if (current_token == "*") {
+			else if (current_token == "*") {					// If * operator, multiply and push result
 				stack.push(num1 * num2);
+				//cout << num1 << " * " << num2 << " = " << num1 * num2 << endl;		// Debug 
 			}
-			else if (current_token == "/") {
+			else if (current_token == "/") {					// If / operator, divide and push result
 				if (num2 == 0) {
-					error = "Error: Divide by 0!";
+					error = "Error: Division by zero";				// Check for division by zero	
+					break;
 				}
+				stack.push(num1 / num2);
+				//cout << num1 << " / " << num2 << " = " << num1 / num2 << endl;		// Debug 
 			}
+			else {
+				cout << "Invalid Operator" << endl;
+				exit(1);
+			}
+			operators--;										// Decrease operators after operation pushed onto stack
 		}
-		else if (tokens[i] == "="){
+		else if (tokens[i] == "="){								// If an equal sign is hit
 			break;
 		}
-		else {
-			// stack.push(stof(current_token));
-			cout << "pushed " << stof(current_token) << endl;
-			operands++;
+		else {													// If a number is hit
+			stack.push(stof(current_token));					// Push onto the stack
+			//cout << "pushed " << stof(current_token) << endl;	// Debug Print
+			operands++;											// Incrase operands
 		}
-	} while (current_token != "=" && i != NUM_EXPRESSIONS);
-}
+	} while (current_token != "=" && i != NUM_EXPRESSIONS);		// While has not hit & hasn't exceeded the array size in case
 
-	int isOperator(string str) {
-		return (str == "+" || str == "-" || str == "*" || str == "/");
+	if (operands >= 2) {										// If there are still operands that were not calculated after = was hit
+		error = "Too many operands!";
 	}
 
-	/*
-	while "=" hasnt been hit
-		if an operator & operands = 2
-			pop last two into a and b
-			switch (operator)
-				case +
-					add them and push back to stack
+	if (error != "") {											// If error message was not set
+		cout << "Error: " << error << endl;
+	}
+	
+	else {														// Else print and pop the last answer - this leaves the stack empty
+		cout << stack.pop() << endl;
+	}
+	//cout << "Operators: " << operators << endl;
+	//cout << "Operands: " << operands << endl;
+	//cout << "TOS: " << stack.TOS->value << endl;
+}
 
-				case -
-					subtract them and push back to stack
+int isOperator(string str) {											// Function to check if a string is an operator
+	return (str == "+" || str == "-" || str == "*" || str == "/");
+}
 
-				case /
-					check divide by zero
-						throw exception if caught
-					divide themand push back to stack
-
-				case *
-				multiply them and push back to stack
-		else if a number
-			convert to float
-			push to stack
-			operands ++ 
-		i++
-
-	pop "=" and print the result
-	*/
+/*
+OUTPUT
+Enter Reversh Polish Expression:
+10 15 + =
+25
+Enter Reversh Polish Expression:
+25 35 - 30 * =
+-300
+Enter Reversh Polish Expression:
+2.5 6.6 * =
+16.5
+Enter Reversh Polish Expression:
+6 2 * 50 50 / + =
+13
+Enter Reversh Polish Expression:
+10 30 50 + =
+Error: Too many operands!
+Enter Reversh Polish Expression:
+10 20 * - =
+Error: Too many operators!
+Enter Reversh Polish Expression:
+0
+*/

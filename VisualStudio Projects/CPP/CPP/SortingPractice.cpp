@@ -10,6 +10,7 @@ void insertionSort(int arr[], int size);
 void selectionSort(int arr[], int size);
 void quickSort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
+void mergeSort(int arr[], int left, int right);
 void merge(int arr[], int left, int mid, int right);
 
 
@@ -19,16 +20,18 @@ int main() {
 	int n = sizeof(arr) / sizeof(arr[0]);	// Elements in array
 
 	// Binary Search
-	int result = binarySearch(arr, 0, n, x);	
-	cout << "Binary Search index for 3: " << result << endl;
+	//int result = binarySearch(arr, 0, n, x);	
+	//cout << "Binary Search index for 3: " << result << endl;
 
 	
 	cout << "Before" << endl;					
+
 	printArray(arr, n);
 	//bubbleSort(arr, n);					// Bubble Sort
 	//insertionSort(arr, n);				// Insertion Sort
 	//selectionSort(arr, n);				// Selection Sort
-	quickSort(arr, 0, n - 1);
+	//quickSort(arr, 0, n - 1);
+	mergeSort(arr, 0, n - 1);
 	cout << endl << "After" << endl;
 	printArray(arr, n);
 
@@ -126,8 +129,65 @@ int partition(int arr[], int low, int high) {
 
 }
 
-void merge(int arr[], int left, int mid, int right) {
+void mergeSort(int arr[], int left, int right) {
+	if (left < right) {										// Check if left index is < right, otherwise return to caller
+		int mid = left + (right - left) / 2;				// Avoids out of bounds exception
+		
+		mergeSort(arr, left, mid);							// Merge Sort left half
+		mergeSort(arr, mid + 1, right);						// Merge sort right half
 
+		merge(arr, left, mid, right);						// Merge the two halves
+		
+	}
+}
+
+void merge(int arr[], int left, int mid, int right) {		// Ex. left = 0, mid = 4, right = 9
+	int leftIdx, rightIdx, mergeIdx;						// Index declarations
+	int leftSize = mid - left + 1;							// Middle - Left + 1 ==>  4 - 0 + 1 = 5 elements in first
+	int rightSize = right - mid;							// Right - Mid ==> 9 - 4 = 5 elements in second
+
+		// Create temp arrays
+	int* leftArr = new int[leftSize];
+	int* rightArr = new int[rightSize];
+
+	// Copy stuff into arrays
+	for (leftIdx = 0; leftIdx < leftSize; leftIdx++) {
+		leftArr[leftIdx] = arr[left + leftIdx];				// Pass main array elements from left to mid into temp array
+	}
+	for (rightIdx = 0; rightIdx < rightSize; rightIdx++) {
+		rightArr[rightSize] = arr[mid + 1 + rightIdx];		// Pass main array elements from mid + 1 to right into temp array
+	}
+
+	leftIdx = 0;
+	rightIdx = 0;
+	mergeIdx = left;										// Index of merged array (original array)
+
+	while (leftIdx < leftSize && rightIdx < rightSize) {	// While both indexes don't exceed the array sizes
+		if (leftArr[leftIdx] <= rightArr[rightIdx]) {		// If left array elem < right array elem
+			arr[mergeIdx] = leftArr[leftIdx];				// Set the merged arr elem to the left array elem
+			leftIdx++;										// Increment 
+		}
+		else {
+			arr[mergeIdx] = rightArr[rightIdx];
+			rightIdx++;
+		}
+		mergeIdx++;
+	}
+
+	while (leftIdx < leftSize) {							// Copy remaining terms if there are
+		arr[mergeIdx] = leftArr[leftIdx];
+		leftIdx++;
+		mergeIdx++;
+	}
+
+	while (rightIdx > rightSize){
+		arr[mergeIdx] = rightArr[rightIdx];
+		rightIdx++;
+		mergeIdx++;
+	}
+
+	delete[] leftArr;
+	delete[] rightArr;
 }
 
 

@@ -10,7 +10,8 @@ public:
 	}
 };
 
-void sortInsert(Node* head, int value);
+void sortInsert(Node** head_ref, int value);
+void printLL(Node* head);
 
 int main() {
 	int input;
@@ -19,44 +20,40 @@ int main() {
 	cout << "Enter an integer: ";
 	cin >> input;
 	while (input != -1) {
-		sortInsert(head, input);
+		sortInsert(&head, input);
 		cout << "Enter an integer: ";
 		cin >> input;
 	}
-
+	printLL(head);
 }
 
-void sortInsert(Node* head, int value) {
-	int previous = -1, current = 0;
-	if (head == NULL) {						// If there is no head node, hence list is empty
-		Node* newNode = new Node(value);	// Set value to head node
-		head = newNode;
+void sortInsert(Node** head_ref, int value) {
+	Node* newNode = new Node(value);
+	Node* current = *head_ref;
+	if (*head_ref == NULL || value < (*head_ref)->data) {		// If there is no head node or value is less than head node
+		newNode->next = (*head_ref);
+		*head_ref = newNode;
 	}
 
 	else {
-		Node* previous = head;
-		Node* current = head->next;
-
-		if (value < head->data) {				// Firstly check if < than head
-			Node* newHead = new Node(value);	// If so, replace it 
-			
+		current = *head_ref;
+		while (current->next != NULL && value > current->next->data) {
+			// Continue iterating until we reach a node where the value is not greater than it's data
+			current = current->next;
 		}
-		else {
-			while (current != NULL) {
-				if (value < current->data) {
-					Node* newNode = new Node(value);
+		newNode->next = current->next;		// Then insert newNode in between that greater node and after current node;
+		current->next = newNode;
+	}
+}
 
-				}
-			}
-		}
-		
-		
-
-
+void printLL(Node* head) {
+	cout << "Printing LL: " << endl;
+	while (head != NULL) {
+		cout << head->data << " ";
+		head = head->next;
 	}
 }
 
 /*
 while check if current node->value is greater than value 
-
 */

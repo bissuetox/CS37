@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab_SortedLinkedList.cpp">
+    <ClCompile Include="BreadthFirstSearchPractice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

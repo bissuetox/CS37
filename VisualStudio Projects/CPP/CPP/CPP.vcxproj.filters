@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BreadthFirstSearchPractice.cpp">
+    <ClCompile Include="2-3Tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

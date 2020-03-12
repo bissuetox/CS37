@@ -32,7 +32,6 @@ If Node has 3 values
 		set parent node's L/R pointers to new nodes
 		If parent has 3 nodes
 			Adjust(parent)
-
 */
 
 int hasChildren(TwoThreeNode* node) {
@@ -40,8 +39,8 @@ int hasChildren(TwoThreeNode* node) {
 }
 
 int largestNode(TwoThreeNode* node1, TwoThreeNode* node2, TwoThreeNode* node3) {
-	TwoThreeNode* largest1, largest2;
-	if ()
+	TwoThreeNode* largest1, *largest2;
+	
 }
 
 void insert(TwoThreeNode* node, int value) {

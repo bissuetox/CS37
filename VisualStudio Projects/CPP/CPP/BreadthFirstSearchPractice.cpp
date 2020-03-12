@@ -19,15 +19,18 @@ While queue is not empty
 		-push right into queue
 */
 void BreadthFirstSearch(Node* root);
+Node* insert(Node* node, int value);
 
 int main() {
-	Node* root = new Node(1);
-	root->left = new Node(2);
-	root->right = new Node(3);
-	root->left->left = new Node(4);
-	root->left->right = new Node(5);
-	root->right->left = new Node(6);
-	root->right->right = new Node(7);
+	Node* root = NULL;
+	root = insert(root, 5);
+	root = insert(root, 12);
+	root = insert(root, 10);
+	root = insert(root, 3);
+	root = insert(root, 4);
+	root = insert(root, 8);
+	root = insert(root, 16);
+	root = insert(root, 1);
 	BreadthFirstSearch(root);
 }
 
@@ -40,20 +43,35 @@ void BreadthFirstSearch(Node* root) {
 	}
 
 	myQueue.push(root);
-	cout << "Pushed " << root->data << endl;
+	//cout << "Pushed " << root->data << endl;
 	while (myQueue.size() != 0) {
 		Node* traverse = myQueue.front();
 		myQueue.pop();
-		cout << "traverse: " << traverse->data << endl;
-		cout << "Popped: " << traverse->data << endl;
-		//cout << traverse->data << " ";
+		//cout << "Popped: " << traverse->data << endl;
+		cout << traverse->data << " ";
 		if (traverse->left != NULL) {
 			myQueue.push(traverse->left);
-			cout << "Pushed: " << traverse->left->data << endl;
+			//cout << "Pushed: " << traverse->left->data << endl;
 		}
 		if (traverse->right != NULL) {
 			myQueue.push(traverse->right);
-			cout << "Pushed: " << traverse->right->data << endl;
+			//cout << "Pushed: " << traverse->right->data << endl;
 		}
 	}
+}
+
+Node* insert(Node* node, int value) {
+	if (node == NULL) {
+		return new Node(value);
+	}
+
+	if (value < node->data) {
+		node->left = insert(node->left, value);
+	}
+	else if (value > node->data) {
+		node->right = insert(node->right, value);
+	}
+
+	// All else fails return unchanged node
+	return node;
 }

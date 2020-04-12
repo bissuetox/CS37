@@ -51,6 +51,7 @@ void BinarySearchTree::Add(int x) {
 	}
 }
 
+// Inorder traversal
 void BinarySearchTree::Print() {
 	// Check if the root is null first
 	if (root == NULL) {
@@ -58,26 +59,30 @@ void BinarySearchTree::Print() {
 		return;
 	}
 	
+	cout << endl << endl;
+
 	Node* current = root;
 	stack<Node*> s;
 	// Keep looping while current is not null or the stack is not empty
 	while (current != NULL || s.empty() == false) {
 		
 		// Iterate to the left most node, pushing the nodes onto stack
-		while (current != NULL) {
+		if (current != NULL) {
 			s.push(current);
 			current = current->left;
 		}
+		else {
+			// Current is now NULL, so set it to the top node and pop it
+			current = s.top();
+			s.pop();
 
-		// Current is now NULL, so set it to the top node and pop it
-		current = s.top();
-		s.pop();
+			// Visit the node
+			cout << current->data << " ";
 
-		// Visit the node
-		cout << current->data << " ";
+			// Now iterate to the right side
+			current = current->right;
+		}
 
-		// Now iterate to the right side
-		current = current->right;
 	}
 }
 

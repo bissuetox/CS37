@@ -39,6 +39,9 @@ public:
 		list = NULL;
 		count = maxCount = 0;
 	}
+	~graphList() {
+		delete list;
+	}
 
 	int getVertex(string fLabel) {
 		int found = -1;

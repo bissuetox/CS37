@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab_GraphList.cpp">
+    <ClCompile Include="Lab_LinkBasedQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

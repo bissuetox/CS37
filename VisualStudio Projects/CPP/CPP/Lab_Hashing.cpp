@@ -31,7 +31,7 @@ public:
 			table[index] = data;
 			return true;
 		}
-		// Else probe to next index
+		// Else linear probe to next index
 		int probe = (index + 1) % SIZE;
 
 		while (index != probe) {
@@ -51,11 +51,14 @@ public:
 
 	// Lookup function
 	int hashLookup(int data) {
-		for (int i = 0; i < SIZE; i++) {
-			if (table[i] == data) {
-				return i;
+		int dataIndex = hash(data);
+
+		do {
+			if (table[dataIndex] == data) {
+				return dataIndex;
 			}
-		}
+			dataIndex = ++dataIndex % SIZE;
+		} while (dataIndex != hash(data));
 		return EMPTY;	// Else return -1 (empty)
 	}
 };

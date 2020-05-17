@@ -1,0 +1,16 @@
+COM HERE IS MY PROGRAM
+START
+   VAR NUM1 = 50
+   PRINT NUM1
+   START
+      NUM1 = 100
+      NUM
+      VAR NUM2 = 500
+      PRINT NUM1
+   FINISH
+   PRINT NUM2
+   NUM1 ++
+   PRINT NUM1
+      
+FINISH
+	
